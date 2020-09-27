@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Slider from "./Components/Slider/Slider";
+import Paginator from "./Components/Paginator/Paginator";
 
 function App() {
     return (
-        <Slider/>
+        <Paginator/>
     );
 }
 

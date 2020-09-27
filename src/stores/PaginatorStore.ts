@@ -1,7 +1,7 @@
 import {action, observable} from "mobx";
 import {createContext} from "react";
 
-class SliderELement {
+class PaginatorELement {
     title: string = '';
     selected: boolean = false;
     index: number = 0;
@@ -11,12 +11,12 @@ function makeid(length: number): string {
     let result: string= '';
     let characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    while (length--) result += characters[(Math.round(Math.random() * characters.length))];
+    while (length--) result += characters[(Math.floor(Math.random() * characters.length))];
 
     return result;
 }
 
-class SliderStore {
+class PaginatorStore {
 
     prev: number = 0;
     curr: number = 0;
@@ -24,7 +24,7 @@ class SliderStore {
     right: number = 0;
     canBeShown: number;
 
-    arr: SliderELement[] = (new Array(16).fill(null)).map((x, i) => ({selected: false, title: makeid(Math.round(Math.random() * 6) + 2), index: i}));
+    arr: PaginatorELement[] = (new Array(16).fill(null)).map((x, i) => ({selected: false, title: makeid(Math.round(Math.random() * 4) + 4), index: i}));
 
     constructor() {
         this.canBeShown = 0;
@@ -33,10 +33,10 @@ class SliderStore {
         this.arr[0].selected = true;
     }
 
-    @observable sliderElements: SliderELement[] = this.arr.filter((x, i) => x.index < this.right);
+    @observable paginatorElements: PaginatorELement[] = this.arr.filter((x, i) => x.index < this.right);
 
-    updateSliderElements = () => {
-        this.sliderElements = this.arr.filter(x => x.index < this.right && x.index >= this.left);
+    updatePaginatorElements = () => {
+        this.paginatorElements = this.arr.filter(x => x.index < this.right && x.index >= this.left);
     };
 
     @action setCanBeShown = (change: number) => {
@@ -56,10 +56,10 @@ class SliderStore {
             }
         }
 
-        this.updateSliderElements();
+        this.updatePaginatorElements();
     };
 
-    @action prevSliderElement = () => {
+    @action prevPaginatorElement = () => {
         let buf = this.prev - 1;
         this.curr = (this.prev + this.arr.length - 1) % this.arr.length;
 
@@ -77,17 +77,17 @@ class SliderStore {
             this.left = this.right - this.canBeShown;
         }
 
-        this.updateSliderElements();
+        this.updatePaginatorElements();
     };
 
-    @action selectSliderElement = (curr: number) => {
+    @action selectPaginatorElement = (curr: number) => {
         this.arr[this.prev].selected = false;
         this.arr[curr].selected = true;
         this.prev = curr;
-        this.updateSliderElements();
+        this.updatePaginatorElements();
     };
 
-    @action nextSliderElement = () => {
+    @action nextPaginatorElement = () => {
         let buf = this.prev + 1;
         this.curr = (this.prev + 1) % this.arr.length;
 
@@ -105,9 +105,9 @@ class SliderStore {
             this.left = 0;
         }
 
-        this.updateSliderElements();
+        this.updatePaginatorElements();
     };
 
 }
 
-export default createContext(new SliderStore());
+export default createContext(new PaginatorStore());
