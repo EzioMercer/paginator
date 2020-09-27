@@ -1,0 +1,54 @@
+.slider {
+	$height: 128px;
+
+	display: flex;
+	align-items: center;
+	height: $height;
+	width: 50%;
+	background-color: lightskyblue;
+
+	@media (hover:none) {
+		width: 100%;
+		padding: 0 8px;
+		box-sizing: border-box;
+	}
+
+	button {
+		position: relative;
+		font-size: 32px;
+		height: 64px;
+		width: 64px;
+		border-radius: 50%;
+		border: none;
+	}
+
+	margin: calc(50vh - #{$height}) auto;
+
+	&_items {
+		display: inline-flex;
+		padding: 0;
+		justify-content: space-around;
+		height: 100%;
+		width: 90%;
+	}
+
+	&_item {
+		list-style: none;
+		align-self: center;
+		cursor: pointer;
+
+		div {
+			border: 1px solid black;
+			border-radius: 32%;
+			padding: 16px;
+			background-color: lightgray;
+		}
+
+		&_active {
+			div {
+				color: yellow;
+				background-color: gray;
+			}
+		}
+	}
+}
